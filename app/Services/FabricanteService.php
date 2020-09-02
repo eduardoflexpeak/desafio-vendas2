@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Fabricante;
+use Illuminate\Support\Facades\Log;
+use Throwable;
+
+class FabricanteService
+{
+    public static function store($request)
+    {
+        try {
+            return Fabricante::create($request);
+        } catch (Throwable $th) {
+            Log::error($th->getMessage());
+            return null;
+        }
+    }
+}
