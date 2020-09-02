@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\FabricanteDataTable;
 use App\Http\Requests\FabricanteRequest;
+use App\Models\Fabricante;
 use App\Services\FabricanteService;
 use Illuminate\Http\Request;
 
 class FabricanteController extends Controller
 {
-    public function index()
+    public function index(FabricanteDataTable $fabricanteDataTable)
     {
-        return view('fabricante.index');
+        return $fabricanteDataTable->render('fabricante.index');
     }
 
     public function create()
@@ -43,14 +45,24 @@ class FabricanteController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Fabricante $fabricante)
     {
-        //
+        return view('fabricante.form', compact('fabricante'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Fabricante $fabricante)
     {
-        //
+        $fabricante = FabricanteService::update($request->all(), $fabricante);
+
+        if ($fabricante) {
+            flash('Fabricante atualizado com sucesso')->success();
+
+            return back();
+        }
+
+        flash('Erro ao atualizar o fabricante')->error();
+
+        return back()->withInput();
     }
 
     public function destroy($id)

@@ -17,4 +17,14 @@ class FabricanteService
             return null;
         }
     }
+
+    public static function update($request, $fabricante)
+    {
+        try {
+            return $fabricante->update($request);
+        } catch (Throwable $th) {
+            Log::error($th->getMessage());
+            return null;
+        }
+    }
 }
