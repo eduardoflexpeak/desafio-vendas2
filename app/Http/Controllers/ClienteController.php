@@ -64,4 +64,9 @@ class ClienteController extends Controller
     {
         //
     }
+
+    public function listaClientes(Request $request)
+    {
+        return ClienteService::listaClientes($request->all());
+    }
 }
